@@ -26,11 +26,11 @@ public void Stuff()
 }
 ```
 
-What you can register  
---- 
-RegisterType 
-RegisterTypeAsSingleton 
-RegisterInstance 
-RegisterTypeIfNotSet 
-RegisterTypeAsSingletonIfNotSet 
-RegisterInstanceIfNotSet 
+What you can register  |
+--- |
+RegisterType |
+RegisterTypeAsSingleton |
+RegisterInstance |
+RegisterTypeIfNotSet |
+RegisterTypeAsSingletonIfNotSet |
+RegisterInstanceIfNotSet |
