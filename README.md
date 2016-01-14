@@ -36,3 +36,7 @@ RegisterInstance |
 RegisterTypeIfNotSet |
 RegisterTypeAsSingletonIfNotSet |
 RegisterInstanceIfNotSet |
+
+### MVVM
+
+### Utils
