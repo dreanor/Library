@@ -38,5 +38,4 @@ RegisterTypeAsSingletonIfNotSet |
 RegisterInstanceIfNotSet |
 
 ### MVVM
-
-### Utils
+...
