@@ -16,8 +16,14 @@ namespace ModelViewViewModel.Base
             property = this.model.GetType().GetProperty(Name);
         }
 
+        /// <summary>
+        /// The name of the property.
+        /// </summary>
         public string Name { get; private set; }
 
+        /// <summary>
+        /// Propertyinfo.
+        /// </summary>
         public object Property
         {
             get

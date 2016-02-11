@@ -29,6 +29,12 @@ namespace ModelViewViewModel.Base
             }
         }
 
+        /// <summary>
+        /// Maps the ViewModel Property to that of the Model.
+        /// </summary>
+        /// <typeparam name="TProperty">TypeProperty.</typeparam>
+        /// <param name="viewmodelProperty">Property of the ViewModel.</param>
+        /// <param name="modelProperty">Property of the Model.</param>
         protected virtual void Map<TProperty>(Expression<Func<TViewModel, TProperty>> viewmodelProperty, Expression<Func<TModel, TProperty>> modelProperty)
         {
             backingModel[PropertyName.For(viewmodelProperty)] = new ModelMapping<TModel, TProperty>(model, modelProperty);
@@ -121,6 +127,11 @@ namespace ModelViewViewModel.Base
             }
         }
 
+        /// <summary>
+        /// Checks wether the matchingModel is equal to the current model.
+        /// </summary>
+        /// <param name="matchingModel">Other Model.</param>
+        /// <returns>Wether the matchingModel is equal to the current model or not.</returns>
         public virtual bool IsFor(TModel matchingModel)
         {
             return model.Equals(matchingModel);

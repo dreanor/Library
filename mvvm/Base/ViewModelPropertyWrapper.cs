@@ -53,6 +53,9 @@ namespace ModelViewViewModel.Base
             }
         }
 
+        /// <summary>
+        /// Wether the ViewModel meets all Validations or not.
+        /// </summary>
         public bool IsValid
         {
             get { return Get(x => x.IsValid); }
@@ -75,11 +78,18 @@ namespace ModelViewViewModel.Base
             }
         }
 
+        /// <summary>
+        /// Sets a Validation on the ViewModel.
+        /// </summary>
+        /// <param name="validation">Validation function.</param>
         public void SetValidation(Func<string> validation)
         {
             this.validation = validation;
         }
 
+        /// <summary>
+        /// Resets IsValid to true and RawValue to null.
+        /// </summary>
         public void Reset()
         {
             rawValue = null;
