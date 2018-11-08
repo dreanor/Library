@@ -15,6 +15,7 @@ tmp/
 *.bak
 *.swp
 *~.nib
+*.vs
 local.properties
 .classpath
 .settings/

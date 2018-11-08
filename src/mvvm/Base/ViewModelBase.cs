@@ -10,7 +10,7 @@ namespace ModelViewViewModel.Base
         where TViewModel : class, INotifyPropertyChanged
     {
         private readonly Dictionary<string, IViewModelPropertyWrapper> viewModelWrapper;
-        private readonly Dictionary<string, IList<Func<bool>>> validationRules;
+        private readonly Dictionary<string, IList<ValidationRule>> validationRules;
         private readonly Dictionary<string, Func<IDataErrorInfo>> validationPropertyFuncs;
         private readonly Dictionary<string, Func<IEnumerable<IDataErrorInfo>>> validationPropertyFuncCollection;
 
@@ -18,7 +18,7 @@ namespace ModelViewViewModel.Base
         {
             validationPropertyFuncCollection = new Dictionary<string, Func<IEnumerable<IDataErrorInfo>>>();
             validationPropertyFuncs = new Dictionary<string, Func<IDataErrorInfo>>();
-            validationRules = new Dictionary<string, IList<Func<bool>>>();
+            validationRules = new Dictionary<string, IList<ValidationRule>>();
             viewModelWrapper = new Dictionary<string, IViewModelPropertyWrapper>();
         }
 
@@ -62,7 +62,7 @@ namespace ModelViewViewModel.Base
                     }
                 }
 
-                return validationRules.Any(x => x.Value.Any(r => !r())) ? "Error" : string.Empty;
+                return validationRules.Any(x => x.Value.Any(r => !r.Validation())) ? "Error" : string.Empty;
             }
         }
 
@@ -72,9 +72,12 @@ namespace ModelViewViewModel.Base
             {
                 if (validationRules.ContainsKey(columnName))
                 {
-                    if (validationRules[columnName].Any(func => !func()))
+                    foreach (var item in validationRules[columnName])
                     {
-                        return "Error";
+                        if (!item.Validation())
+                        {
+                            return item.ErrorMessage;
+                        }
                     }
                 }
 
@@ -116,7 +119,7 @@ namespace ModelViewViewModel.Base
 
             viewModelWrapper[viewmodelPropertyName] = viewModelPropertyWrapper;
             NotifyOnChange(viewModelPropertyWrapper, x => x.IsValid, viewmodelProperty);
-            AddValidationRule(viewmodelProperty, () => viewModelPropertyWrapper.IsValid);
+            AddValidationRule(viewmodelProperty, new ValidationRule(() => viewModelPropertyWrapper.IsValid, "Error"));
             viewModelPropertyWrapper.SetValidation(() => this[viewmodelPropertyName]);
         }
 
@@ -155,12 +158,12 @@ namespace ModelViewViewModel.Base
             MapViewModelPropertyWrapper(viewmodelProperty, viewModelPropertyWrapper);
         }
 
-        protected virtual void AddValidationRule<T>(Expression<Func<TViewModel, T>> viewmodelProperty, Func<bool> validationRule)
+        protected virtual void AddValidationRule<T>(Expression<Func<TViewModel, T>> viewmodelProperty, ValidationRule validationRule)
         {
             var viewModelPropertyName = PropertyName.For(viewmodelProperty);
             if (!validationRules.ContainsKey(viewModelPropertyName))
             {
-                validationRules[viewModelPropertyName] = new List<Func<bool>>();
+                validationRules[viewModelPropertyName] = new List<ValidationRule>();
             }
 
             validationRules[viewModelPropertyName].Add(validationRule);

@@ -54,6 +54,7 @@
     <Compile Include="Base\IViewModelPropertyWrapper.cs" />
     <Compile Include="Base\ModelMappingObject.cs" />
     <Compile Include="Base\NotifyPropertyChangedBase.cs" />
+    <Compile Include="Base\ValidationRule.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
     <Compile Include="Base\ViewModelBaseWithModel.cs" />
     <Compile Include="Base\ViewModelPropertyWrapper.cs" />
